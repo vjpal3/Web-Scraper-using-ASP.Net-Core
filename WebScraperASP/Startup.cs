@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using WebScraperASP.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebScraperASP.Services;
 
 namespace WebScraperASP
 {
@@ -43,6 +44,7 @@ namespace WebScraperASP
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IScraperNavigation, ScraperNavigation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,8 +71,11 @@ namespace WebScraperASP
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}")
+                    .MapRoute(
+                        name: "Scraper",
+                        template: "ScrapeData/StartScraper");
             });
         }
     }
