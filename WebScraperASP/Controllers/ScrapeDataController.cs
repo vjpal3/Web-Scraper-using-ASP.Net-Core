@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using WebScraperASP.Data.DapperServices;
+using WebScraperASP.Models;
 using WebScraperASP.Services;
 
 namespace WebScraperASP.Controllers
@@ -19,15 +19,15 @@ namespace WebScraperASP.Controllers
         public IWebDriver Driver { get; private set; }
         private readonly IScraperNavigation navigation;
         private readonly IDataExtraction dataExtraction;
-        private readonly IDatabaseWriter databaseWriter;
+        private readonly ICompanyRepository companyRepository;
 
         //private List<string> extractedData = new List<string>();
 
-        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, IDatabaseWriter dbWriter)
+        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo)
         {
             this.navigation = navigation;
             this.dataExtraction = dataExtraction;
-            this.databaseWriter = dbWriter;
+            this.companyRepository = companyRepo;
         }
         public IActionResult Index()
         {
@@ -46,7 +46,6 @@ namespace WebScraperASP.Controllers
                 SaveDataToDatabase();
                 StopScraper();
             }
-            //ViewBag.extractedString = string.Join(",", extractedData.ToArray());
             return View();
         }
 
@@ -66,8 +65,7 @@ namespace WebScraperASP.Controllers
 
         private void SaveDataToDatabase()
         {
-            databaseWriter.ScrapedData = dataExtraction.GetStockData();
-            databaseWriter.WriteData();
+            companyRepository.AddCompany(dataExtraction.GetStockData());
         }
 
         private void StopScraper()
