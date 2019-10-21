@@ -41,6 +41,7 @@ namespace WebScraperASP.Controllers
                 StartDataExtraction();
                 StopScraper();
             }
+            ViewBag.extractedString = string.Join(",", extractedData.ToArray());
             return View();
         }
 
@@ -49,6 +50,7 @@ namespace WebScraperASP.Controllers
         {
             dataExtraction.ScrapeStockData(Driver);
             extractedData = dataExtraction.GetStockData();
+
         }
 
         private void StartNavigation()

@@ -59,6 +59,7 @@ namespace WebScraperASP.Services
             }
             catch (WebDriverTimeoutException)
             {
+                driver.Url = "https://finance.yahoo.com";
             }
         }
 
