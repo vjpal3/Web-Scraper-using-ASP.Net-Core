@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using WebScraperASP.Data.DapperServices;
 using WebScraperASP.Services;
 
 namespace WebScraperASP.Controllers
@@ -18,12 +19,15 @@ namespace WebScraperASP.Controllers
         public IWebDriver Driver { get; private set; }
         private readonly IScraperNavigation navigation;
         private readonly IDataExtraction dataExtraction;
-        private List<string> extractedData = new List<string>();
+        private readonly IDatabaseWriter databaseWriter;
 
-        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction)
+        //private List<string> extractedData = new List<string>();
+
+        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, IDatabaseWriter dbWriter)
         {
             this.navigation = navigation;
             this.dataExtraction = dataExtraction;
+            this.databaseWriter = dbWriter;
         }
         public IActionResult Index()
         {
@@ -39,18 +43,11 @@ namespace WebScraperASP.Controllers
             {
                 StartNavigation();
                 StartDataExtraction();
+                SaveDataToDatabase();
                 StopScraper();
             }
-            ViewBag.extractedString = string.Join(",", extractedData.ToArray());
+            //ViewBag.extractedString = string.Join(",", extractedData.ToArray());
             return View();
-        }
-
-        
-        private void StartDataExtraction()
-        {
-            dataExtraction.ScrapeStockData(Driver);
-            extractedData = dataExtraction.GetStockData();
-
         }
 
         private void StartNavigation()
@@ -62,6 +59,16 @@ namespace WebScraperASP.Controllers
             navigation.OpenAPortfolio(Driver);
         }
 
+        private void StartDataExtraction()
+        {
+            dataExtraction.ScrapeStockData(Driver);
+        }
+
+        private void SaveDataToDatabase()
+        {
+            databaseWriter.ScrapedData = dataExtraction.GetStockData();
+            databaseWriter.WriteData();
+        }
 
         private void StopScraper()
         {

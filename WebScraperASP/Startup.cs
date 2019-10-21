@@ -14,6 +14,7 @@ using WebScraperASP.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebScraperASP.Services;
+using WebScraperASP.Data.DapperServices;
 
 namespace WebScraperASP
 {
@@ -44,8 +45,10 @@ namespace WebScraperASP
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSingleton<IScraperNavigation, ScraperNavigation>();
-            services.AddSingleton<IDataExtraction, DataExtraction>();
+
+            services.AddSingleton<IScraperNavigation, ScraperNavigation>()
+                    .AddSingleton<IDataExtraction, DataExtraction>()
+                    .AddSingleton<IDatabaseWriter, DatabaseWriter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
