@@ -17,17 +17,17 @@ namespace WebScraperASP.Services
         public ScraperNavigation(IConfiguration config)
         {
             this.config = config;
+        }
 
+        public void BeginNavigation(IWebDriver driver)
+        {
+            LaunchBrowser(driver);
+            Login(driver);
+            OpenAPortfolio(driver);
         }
         public void LaunchBrowser(IWebDriver driver)
         {
             driver.Navigate().GoToUrl("https://login.yahoo.com/");
-        }
-
-        public void CloseBrowser(IWebDriver driver)
-        {
-            Thread.Sleep(10000);
-            driver.Quit();
         }
 
         public void Login(IWebDriver driver)
@@ -48,36 +48,9 @@ namespace WebScraperASP.Services
             element.SendKeys(Keys.Return);
         }
 
-        public void GoToFinancePage(IWebDriver driver)
-        {
-            WebDriverWait waitForFinanceLink = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(20);
-
-            try
-            {
-                driver.Url = "https://finance.yahoo.com";
-            }
-            catch (WebDriverTimeoutException)
-            {
-                driver.Url = "https://finance.yahoo.com";
-            }
-        }
-
-        public void GetListOfPortfolios(IWebDriver driver)
-        {
-            WebDriverWait waitForFolioList = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            IWebElement folioList = waitForFolioList.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//a[@href='/portfolios']")));
-            folioList.Click();
-        }
-
         public void OpenAPortfolio(IWebDriver driver)
         {
-            WebDriverWait waitForFolio = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            IWebElement folio = waitForFolio.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("ul[data-test='secnav-list'] li:nth-child(2)>a[title='Solid Folio']")));
-            folio.Click();
-
             WebDriverWait waitForCustomView = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            //driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_3/view/view_4");
             try
             {
                 driver.Url = "https://finance.yahoo.com/portfolio/p_3/view/view_4";

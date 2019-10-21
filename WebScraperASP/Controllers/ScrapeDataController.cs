@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,6 @@ namespace WebScraperASP.Controllers
         private readonly IScraperNavigation navigation;
         private readonly IDataExtraction dataExtraction;
         private readonly ICompanyRepository companyRepository;
-
-        //private List<string> extractedData = new List<string>();
 
         public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo)
         {
@@ -51,11 +50,7 @@ namespace WebScraperASP.Controllers
 
         private void StartNavigation()
         {
-            navigation.LaunchBrowser(Driver);
-            navigation.Login(Driver);
-            navigation.GoToFinancePage(Driver);
-            navigation.GetListOfPortfolios(Driver);
-            navigation.OpenAPortfolio(Driver);
+            navigation.BeginNavigation(Driver);
         }
 
         private void StartDataExtraction()
@@ -70,7 +65,8 @@ namespace WebScraperASP.Controllers
 
         private void StopScraper()
         {
-            navigation.CloseBrowser(Driver);
+            Thread.Sleep(10000);
+            Driver.Quit();
         }
     }
 }
