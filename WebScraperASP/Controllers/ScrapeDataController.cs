@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -11,6 +12,7 @@ using WebScraperASP.Services;
 
 namespace WebScraperASP.Controllers
 {
+    [Authorize]
     public class ScrapeDataController : Controller
     {
         public IWebDriver Driver { get; private set; }
