@@ -47,5 +47,27 @@ namespace WebScraperASP.Services
             element.SendKeys(userCredential);
             element.SendKeys(Keys.Return);
         }
+
+        public void GoToFinancePage(IWebDriver driver)
+        {
+            WebDriverWait waitForFinanceLink = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(20);
+
+            try
+            {
+                driver.Navigate().GoToUrl("https://finance.yahoo.com");
+            }
+            catch (WebDriverException)
+            {
+                driver.Url = "https://finance.yahoo.com";
+            }
+        }
+
+        public void GetListOfPortfolios(IWebDriver driver)
+        {
+            WebDriverWait waitForFolioList = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IWebElement folioList = waitForFolioList.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//a[@href='/portfolios']")));
+            folioList.Click();
+        }
     }
 }
