@@ -55,9 +55,9 @@ namespace WebScraperASP.Services
 
             try
             {
-                driver.Navigate().GoToUrl("https://finance.yahoo.com");
+                driver.Url = "https://finance.yahoo.com";
             }
-            catch (WebDriverException)
+            catch (WebDriverTimeoutException)
             {
                 driver.Url = "https://finance.yahoo.com";
             }
@@ -68,6 +68,16 @@ namespace WebScraperASP.Services
             WebDriverWait waitForFolioList = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             IWebElement folioList = waitForFolioList.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//a[@href='/portfolios']")));
             folioList.Click();
+        }
+
+        public void OpenAPortfolio(IWebDriver driver)
+        {
+            WebDriverWait waitForFolio = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IWebElement folio = waitForFolio.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("ul[data-test='secnav-list'] li:nth-child(2)>a[title='Solid Folio']")));
+            folio.Click();
+
+            WebDriverWait waitForCustomView = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_3/view/view_4");
         }
     }
 }

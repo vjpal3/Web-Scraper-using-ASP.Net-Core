@@ -13,5 +13,6 @@ namespace WebScraperASP.Services
         void Login(IWebDriver driver);
         void GoToFinancePage(IWebDriver driver);
         void GetListOfPortfolios(IWebDriver driver);
+        void OpenAPortfolio(IWebDriver driver);
     }
 }

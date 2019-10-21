@@ -48,6 +48,7 @@ namespace WebScraperASP.Controllers
             navigation.Login(Driver);
             navigation.GoToFinancePage(Driver);
             navigation.GetListOfPortfolios(Driver);
+            navigation.OpenAPortfolio(Driver);
         }
 
         private void StopScraper()
