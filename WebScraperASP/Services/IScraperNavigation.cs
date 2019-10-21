@@ -10,5 +10,7 @@ namespace WebScraperASP.Services
     {
         void LaunchBrowser(IWebDriver driver);
         void CloseBrowser(IWebDriver driver);
+        void Login(IWebDriver driver);
+
     }
 }

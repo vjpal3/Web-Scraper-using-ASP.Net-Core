@@ -45,6 +45,7 @@ namespace WebScraperASP.Controllers
         private void StartNavigation()
         {
             navigation.LaunchBrowser(Driver);
+            navigation.Login(Driver);
         }
 
         private void StopScraper()
