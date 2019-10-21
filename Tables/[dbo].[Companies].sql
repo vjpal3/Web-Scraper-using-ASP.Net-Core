@@ -1,0 +1,16 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Companies](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SymbolName] [nchar](10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	[CompanyName] [nvarchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[Companies] ADD  CONSTRAINT [PK_Companies] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+) ON [PRIMARY]
+GO
+
