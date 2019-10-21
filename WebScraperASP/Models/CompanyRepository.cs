@@ -1,16 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace WebScraperASP.Models
 {
     public class CompanyRepository : ICompanyRepository
     {
-        
+        private readonly IConfiguration config;
+
+        public CompanyRepository(IConfiguration config)
+        {
+            this.config = config;
+        }
         public void AddCompany(List<string> scrapedData)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = new SqlConnection(config.GetConnectionString("ScraperData")))
+            {
+                var companies = new List<Company>();
+
+                foreach (var item in scrapedData)
+                {
+                    var data = item.Split('\t');
+                    companies.Add(new Company { SymbolName = data[0].Trim(), CompanyName = data[1].Trim() });
+                }
+                connection.Execute("dbo.uspCompanies_InsertCompany @SymbolName, @CompanyName", companies);
+            }
         }
     }
 }
