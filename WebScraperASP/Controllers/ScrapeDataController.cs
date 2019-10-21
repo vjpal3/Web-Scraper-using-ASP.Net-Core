@@ -17,10 +17,13 @@ namespace WebScraperASP.Controllers
     {
         public IWebDriver Driver { get; private set; }
         private readonly IScraperNavigation navigation;
+        private readonly IDataExtraction dataExtraction;
+        private List<string> extractedData = new List<string>();
 
-        public ScrapeDataController(IScraperNavigation navigation)
+        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction)
         {
             this.navigation = navigation;
+            this.dataExtraction = dataExtraction;
         }
         public IActionResult Index()
         {
@@ -35,11 +38,17 @@ namespace WebScraperASP.Controllers
             using (Driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), options))
             {
                 StartNavigation();
-                //StartDataCollection();
+                StartDataExtraction();
                 StopScraper();
             }
-            
             return View();
+        }
+
+        
+        private void StartDataExtraction()
+        {
+            dataExtraction.ScrapeStockData(Driver);
+            extractedData = dataExtraction.GetStockData();
         }
 
         private void StartNavigation()
@@ -51,12 +60,10 @@ namespace WebScraperASP.Controllers
             navigation.OpenAPortfolio(Driver);
         }
 
+
         private void StopScraper()
         {
             navigation.CloseBrowser(Driver);
         }
-
-
-        
     }
 }

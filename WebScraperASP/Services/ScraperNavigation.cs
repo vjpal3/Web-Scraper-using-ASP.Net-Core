@@ -59,7 +59,6 @@ namespace WebScraperASP.Services
             }
             catch (WebDriverTimeoutException)
             {
-                driver.Url = "https://finance.yahoo.com";
             }
         }
 
@@ -77,7 +76,14 @@ namespace WebScraperASP.Services
             folio.Click();
 
             WebDriverWait waitForCustomView = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_3/view/view_4");
+            //driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_3/view/view_4");
+            try
+            {
+                driver.Url = "https://finance.yahoo.com/portfolio/p_3/view/view_4";
+            }
+            catch (WebDriverTimeoutException)
+            {
+            }
         }
     }
 }

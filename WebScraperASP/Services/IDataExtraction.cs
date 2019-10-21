@@ -6,7 +6,7 @@ using OpenQA.Selenium;
 
 namespace WebScraperASP.Services
 {
-    interface IDataExtraction
+    public interface IDataExtraction
     {
         void ScrapeStockData(IWebDriver driver);
         List<string> GetStockData();
