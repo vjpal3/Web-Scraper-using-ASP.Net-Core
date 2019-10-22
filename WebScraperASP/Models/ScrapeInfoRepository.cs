@@ -53,5 +53,6 @@ namespace WebScraperASP.Models
             List<ScrapeInfo> scrapes = connection.Query<ScrapeInfo>("dbo.uspScrapesInfo_GetLatest @UserId", new { UserId = userId }).ToList();
             return scrapes[0];
         }
+
     }
 }

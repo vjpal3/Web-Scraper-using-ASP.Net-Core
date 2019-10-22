@@ -1,13 +1,17 @@
 ﻿@model IEnumerable<WebScraperASP.ViewModels.CombinedStockDataVM>
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Scraped Data";
 }
 
-<h1>View</h1>
+<h3>Data was scraped successfully.</h3>
 
 <p>
-    
+    @{
+        var e = Model.ElementAt(0);
+    }
+
+    @e.ScrapeInfo.ScrapeDate &emsp; @e.ScrapeInfo.TimeZone
     
 </p>
 <table class="table">
@@ -19,9 +23,8 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>@item.Company.SymbolName  
-            </td>
-            <td>
+            <td>@item.Company.SymbolName</td>
+            <td> 
                 @item.Company.CompanyName
             </td>
             <td>@item.StockData.LastPrice</td>

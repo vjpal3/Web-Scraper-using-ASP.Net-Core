@@ -6,7 +6,7 @@ CREATE procedure [dbo].[uspScrapesInfo_GetLatest]
 as
 begin
 	set nocount on;
-	SELECT TOP 1 ScrapeId FROM dbo.ScrapesInfo 
+	SELECT TOP 1 * FROM dbo.ScrapesInfo 
 		where UserId = @UserId ORDER BY ScrapeId DESC
 end
 GO

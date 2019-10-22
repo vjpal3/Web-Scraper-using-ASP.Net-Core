@@ -10,8 +10,6 @@ namespace WebScraperASP.ViewModels
     {
         public StockData StockData { get; set; }
         public Company Company { get; set; }
-
         public ScrapeInfo ScrapeInfo { get; set; }
-
     }
 }

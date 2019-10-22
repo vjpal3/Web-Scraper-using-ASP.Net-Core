@@ -28,6 +28,7 @@ namespace WebScraperASP.ViewModels
                     ("dbo.uspStocksData_Companies_GetRecent @UserId",
                     MapResults,
                     new { UserId = userId }, splitOn: "LastPrice").ToList();
+
                 stocksData[0].ScrapeInfo = scrapeInfo;
                 return stocksData;
             }

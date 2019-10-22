@@ -19,7 +19,7 @@ namespace WebScraperASP.Controllers
     [Authorize]
     public class ScrapeDataController : Controller
     {
-        private List<string> extractedData = new List<string>();
+        //private List<string> extractedData = new List<string>();
         public IWebDriver Driver { get; private set; }
         private readonly IScraperNavigation navigation;
         private readonly IDataExtraction dataExtraction;
@@ -55,11 +55,12 @@ namespace WebScraperASP.Controllers
             {
                 StartNavigation();
                 StartDataExtraction();
-                SaveDataToDatabase();
-                CombinedStocksData = GetRecentData();
                 StopScraper();
             }
-            
+
+            SaveDataToDatabase();
+            CombinedStocksData = GetRecentData();
+
             return View(CombinedStocksData);
         }
 
@@ -76,14 +77,13 @@ namespace WebScraperASP.Controllers
         private void StartDataExtraction()
         {
             dataExtraction.ScrapeStockData(Driver);
-            extractedData = dataExtraction.GetStockData();
+            
         }
 
         private void SaveDataToDatabase()
         {
             companyRepository.AddCompany(dataExtraction.GetStockData());
 
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             scrapeInfoRepository.AddScrapeInfo(dataExtraction.GetStockData(), UserId);
 
             stockDataRepository.AddStockData(dataExtraction.GetStockData(), scrapeInfoRepository, companyRepository, UserId);
