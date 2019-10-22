@@ -8,5 +8,6 @@ namespace WebScraperASP.Models
     public interface IStockDataRepository
     {
         void AddStockData(List<string> scrapedData, IScrapeInfoRepository scrapeInfoReo, ICompanyRepository companyRepo, string userId);
+
     }
 }

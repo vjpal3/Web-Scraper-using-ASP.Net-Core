@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebScraperASP.Services;
 using WebScraperASP.Models;
+using WebScraperASP.ViewModels;
 
 namespace WebScraperASP
 {
@@ -50,7 +51,8 @@ namespace WebScraperASP
                     .AddSingleton<IDataExtraction, DataExtraction>()
                     .AddSingleton<ICompanyRepository, CompanyRepository>()
                     .AddSingleton<IScrapeInfoRepository, ScrapeInfoRepository>()
-                    .AddSingleton<IStockDataRepository, StockDataRepository>();
+                    .AddSingleton<IStockDataRepository, StockDataRepository>()
+                    .AddSingleton<ICombinedStockDataVMRepo, CombinedStockDataVMRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

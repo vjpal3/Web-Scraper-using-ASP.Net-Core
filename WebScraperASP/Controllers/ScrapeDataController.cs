@@ -12,6 +12,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using WebScraperASP.Models;
 using WebScraperASP.Services;
+using WebScraperASP.ViewModels;
 
 namespace WebScraperASP.Controllers
 {
@@ -25,14 +26,16 @@ namespace WebScraperASP.Controllers
         private readonly ICompanyRepository companyRepository;
         private readonly IScrapeInfoRepository scrapeInfoRepository;
         private readonly IStockDataRepository stockDataRepository;
+        private readonly ICombinedStockDataVMRepo combinedStockDataVMRepo;
 
-        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo, IScrapeInfoRepository scrapeInfoRepo, IStockDataRepository stockDataRepo)
+        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo, IScrapeInfoRepository scrapeInfoRepo, IStockDataRepository stockDataRepo, ICombinedStockDataVMRepo combinedStockDataVMRepo)
         {
             this.navigation = navigation;
             this.dataExtraction = dataExtraction;
             this.companyRepository = companyRepo;
             this.scrapeInfoRepository = scrapeInfoRepo;
             this.stockDataRepository = stockDataRepo;
+            this.combinedStockDataVMRepo = combinedStockDataVMRepo;
         }
         public IActionResult Index()
         {
@@ -49,10 +52,16 @@ namespace WebScraperASP.Controllers
                 StartNavigation();
                 StartDataExtraction();
                 SaveDataToDatabase();
+                GetRecentData();
                 StopScraper();
             }
             
             return View();
+        }
+
+        private void GetRecentData()
+        {
+            throw new NotImplementedException();
         }
 
         private void StartNavigation()
