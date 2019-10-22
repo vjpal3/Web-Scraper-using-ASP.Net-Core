@@ -31,5 +31,12 @@ namespace WebScraperASP.Models
                 connection.Execute("dbo.uspCompanies_InsertCompany @SymbolName, @CompanyName", companies);
             }
         }
+
+        public int GetSymbolId(IDbConnection connection, string symbolName)
+        {
+            List<Company> companies = connection.Query<Company>("dbo.uspCompanies_GetSymbol @SymbolName", new { SymbolName = symbolName }).ToList();
+
+            return companies[0].Id;
+        }
     }
 }

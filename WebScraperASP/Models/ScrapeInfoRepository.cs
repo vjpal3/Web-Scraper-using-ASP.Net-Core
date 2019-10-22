@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 
@@ -45,6 +46,12 @@ namespace WebScraperASP.Models
 
                 connection.Execute("dbo.uspScrapesInfo_InsertScrapeInfo @ScrapeDate, @TimeZone, @UserId", new ScrapeInfo { ScrapeDate = today, TimeZone = timeZone, UserId = userId });
             }
+        }
+
+        public int GetScrapeId(IDbConnection connection, string userId)
+        {
+            List<ScrapeInfo> scrapes = connection.Query<ScrapeInfo>("dbo.uspScrapesInfo_GetLatest").ToList();
+            return scrapes[0].ScrapeId;
         }
     }
 }
