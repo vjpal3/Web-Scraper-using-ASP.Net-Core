@@ -44,7 +44,7 @@ namespace WebScraperASP.Models
                     Console.WriteLine("Invalid Time data");
                 }
 
-                connection.Execute("dbo.uspScrapesInfo_InsertScrapeInfo @ScrapeDate, @TimeZone, @UserId", new ScrapeInfo { ScrapeDate = today, TimeZone = timeZone, UserId = userId });
+                connection.Execute("dbo.uspScrapesInfo_AddScrapeInfo @ScrapeDate, @TimeZone, @UserId", new ScrapeInfo { ScrapeDate = today, TimeZone = timeZone, UserId = userId });
             }
         }
 
