@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -21,12 +22,14 @@ namespace WebScraperASP.Controllers
         private readonly IScraperNavigation navigation;
         private readonly IDataExtraction dataExtraction;
         private readonly ICompanyRepository companyRepository;
+        private readonly IScrapeInfoRepository scrapeInfoRepository;
 
-        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo)
+        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo, IScrapeInfoRepository scrapeInfoRepo)
         {
             this.navigation = navigation;
             this.dataExtraction = dataExtraction;
             this.companyRepository = companyRepo;
+            this.scrapeInfoRepository = scrapeInfoRepo;
         }
         public IActionResult Index()
         {
@@ -61,6 +64,10 @@ namespace WebScraperASP.Controllers
         private void SaveDataToDatabase()
         {
             companyRepository.AddCompany(dataExtraction.GetStockData());
+
+            //string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            scrapeInfoRepository.AddScrapeInfo(dataExtraction.GetStockData(), userId);
         }
 
         private void StopScraper()
