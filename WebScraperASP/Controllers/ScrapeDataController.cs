@@ -23,13 +23,15 @@ namespace WebScraperASP.Controllers
         private readonly IDataExtraction dataExtraction;
         private readonly ICompanyRepository companyRepository;
         private readonly IScrapeInfoRepository scrapeInfoRepository;
+        private readonly IStockDataRepository stockDataRepository;
 
-        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo, IScrapeInfoRepository scrapeInfoRepo)
+        public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo, IScrapeInfoRepository scrapeInfoRepo, IStockDataRepository stockDataRepo)
         {
             this.navigation = navigation;
             this.dataExtraction = dataExtraction;
             this.companyRepository = companyRepo;
             this.scrapeInfoRepository = scrapeInfoRepo;
+            this.stockDataRepository = stockDataRepo;
         }
         public IActionResult Index()
         {
@@ -65,9 +67,10 @@ namespace WebScraperASP.Controllers
         {
             companyRepository.AddCompany(dataExtraction.GetStockData());
 
-            //string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             scrapeInfoRepository.AddScrapeInfo(dataExtraction.GetStockData(), userId);
+
+            stockDataRepository.AddStockData(dataExtraction.GetStockData(), userId);
         }
 
         private void StopScraper()

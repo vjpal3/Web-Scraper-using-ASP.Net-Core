@@ -49,7 +49,8 @@ namespace WebScraperASP
             services.AddSingleton<IScraperNavigation, ScraperNavigation>()
                     .AddSingleton<IDataExtraction, DataExtraction>()
                     .AddSingleton<ICompanyRepository, CompanyRepository>()
-                    .AddSingleton<IScrapeInfoRepository, ScrapeInfoRepository>();
+                    .AddSingleton<IScrapeInfoRepository, ScrapeInfoRepository>()
+                    .AddSingleton<IStockDataRepository, StockDataRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
