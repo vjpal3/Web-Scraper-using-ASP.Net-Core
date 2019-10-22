@@ -1,17 +1,8 @@
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
---CREATE PROCEDURE dbo.uspCompanies_InsertCompany 
---					@SymbolName nchar(10), @CompanyName nvarchar(50)
---AS
---SET NOCOUNT ON
---Insert into dbo.Companies
---			(SymbolName, CompanyName)
---		values
---			(@SymbolName, @CompanyName)
 
-
-CREATE PROCEDURE [dbo].[uspCompanies_InsertCompany] 
+CREATE PROCEDURE [dbo].[uspCompanies_AddCompany] 
 					@SymbolName nchar(10), @CompanyName nvarchar(50)
 AS
 SET NOCOUNT ON

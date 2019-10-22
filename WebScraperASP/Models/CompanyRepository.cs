@@ -28,7 +28,7 @@ namespace WebScraperASP.Models
                     var data = item.Split('\t');
                     companies.Add(new Company { SymbolName = data[0].Trim(), CompanyName = data[1].Trim() });
                 }
-                connection.Execute("dbo.uspCompanies_InsertCompany @SymbolName, @CompanyName", companies);
+                connection.Execute("dbo.uspCompanies_AddCompany @SymbolName, @CompanyName", companies);
             }
         }
 

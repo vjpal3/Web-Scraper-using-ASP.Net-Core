@@ -26,8 +26,6 @@ namespace WebScraperASP.Services
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//table")));
-
-            ExtractStockData(driver);
         }
 
         private void ExtractStockData(IWebDriver driver)
