@@ -1,8 +1,33 @@
-﻿
+﻿@model IEnumerable<WebScraperASP.ViewModels.CombinedStockDataVM>
+
 @{
-    ViewData["Title"] = "StartScraper";
+    ViewData["Title"] = "View";
 }
 
-<h3>Data was scraped successfully.</h3>
+<h1>View</h1>
 
+<p>
+    
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.Company.SymbolName  
+            </td>
+            <td>
+                @item.Company.CompanyName
+            </td>
+            <td>@item.StockData.LastPrice</td>
+            <td>@item.StockData.Change</td>
 
+        </tr>
+}
+    </tbody>
+</table>

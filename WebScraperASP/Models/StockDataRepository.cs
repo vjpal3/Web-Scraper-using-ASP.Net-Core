@@ -22,7 +22,7 @@ namespace WebScraperASP.Models
             using (IDbConnection connection = new SqlConnection(config.GetConnectionString("ScraperData")))
             {
                 var stocksData = new List<StockData>();
-                int scrapeId = scrapeInfoRepo.GetScrapeId(connection, userId);
+                int scrapeId = scrapeInfoRepo.GetScrapeInfo(connection, userId).ScrapeId;
                 
                 foreach (var item in scrapedData)
                 {

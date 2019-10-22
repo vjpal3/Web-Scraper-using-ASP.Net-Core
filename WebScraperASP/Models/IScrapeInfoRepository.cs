@@ -9,6 +9,6 @@ namespace WebScraperASP.Models
     public interface IScrapeInfoRepository
     {
         void AddScrapeInfo(List<string> scrapedData, string userId);
-        int GetScrapeId(IDbConnection connection, string userId);
+        ScrapeInfo GetScrapeInfo(IDbConnection connection, string userId);
     }
 }

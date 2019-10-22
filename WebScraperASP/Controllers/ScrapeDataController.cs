@@ -27,6 +27,8 @@ namespace WebScraperASP.Controllers
         private readonly IScrapeInfoRepository scrapeInfoRepository;
         private readonly IStockDataRepository stockDataRepository;
         private readonly ICombinedStockDataVMRepo combinedStockDataVMRepo;
+        public List<CombinedStockDataVM> CombinedStocksData { get; set; }
+        public string UserId { get; set; }
 
         public ScrapeDataController(IScraperNavigation navigation, IDataExtraction dataExtraction, ICompanyRepository companyRepo, IScrapeInfoRepository scrapeInfoRepo, IStockDataRepository stockDataRepo, ICombinedStockDataVMRepo combinedStockDataVMRepo)
         {
@@ -36,6 +38,7 @@ namespace WebScraperASP.Controllers
             this.scrapeInfoRepository = scrapeInfoRepo;
             this.stockDataRepository = stockDataRepo;
             this.combinedStockDataVMRepo = combinedStockDataVMRepo;
+            
         }
         public IActionResult Index()
         {
@@ -44,6 +47,7 @@ namespace WebScraperASP.Controllers
 
         public IActionResult StartScraper()
         {
+            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("start-maximized");
 
@@ -52,16 +56,16 @@ namespace WebScraperASP.Controllers
                 StartNavigation();
                 StartDataExtraction();
                 SaveDataToDatabase();
-                GetRecentData();
+                CombinedStocksData = GetRecentData();
                 StopScraper();
             }
             
-            return View();
+            return View(CombinedStocksData);
         }
 
-        private void GetRecentData()
+        private List<CombinedStockDataVM> GetRecentData()
         {
-            throw new NotImplementedException();
+            return combinedStockDataVMRepo.GetRecentStocksData(scrapeInfoRepository, UserId);
         }
 
         private void StartNavigation()
@@ -79,10 +83,10 @@ namespace WebScraperASP.Controllers
         {
             companyRepository.AddCompany(dataExtraction.GetStockData());
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            scrapeInfoRepository.AddScrapeInfo(dataExtraction.GetStockData(), userId);
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            scrapeInfoRepository.AddScrapeInfo(dataExtraction.GetStockData(), UserId);
 
-            stockDataRepository.AddStockData(dataExtraction.GetStockData(), scrapeInfoRepository, companyRepository, userId);
+            stockDataRepository.AddStockData(dataExtraction.GetStockData(), scrapeInfoRepository, companyRepository, UserId);
         }
 
         private void StopScraper()
