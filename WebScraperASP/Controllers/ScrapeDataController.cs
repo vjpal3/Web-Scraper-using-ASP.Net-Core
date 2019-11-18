@@ -59,6 +59,7 @@ namespace WebScraperASP.Controllers
             }
 
             SaveDataToDatabase();
+
             CombinedStocksData = GetRecentData();
 
             return View(CombinedStocksData);

@@ -4,33 +4,45 @@
     ViewData["Title"] = "Scraped Data";
 }
 
-<h3>Data was scraped successfully.</h3>
+<p>Following data was scraped on 
 
-<p>
     @{
         var e = Model.ElementAt(0);
     }
 
-    @e.ScrapeInfo.ScrapeDate &emsp; @e.ScrapeInfo.TimeZone
-    
+    @e.ScrapeInfo.ScrapeDate.ToString("MMM dd yyyy hh:mm tt") &nbsp; @e.ScrapeInfo.TimeZone
+
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th></th>
+            <th>Symbol</th>
+            <th>Company</th>
+            <th>Last Price</th>
+            <th>Change</th>
+            <th>% Change</th>
+            <th>Prev Close</th>
+            <th>52-Wk High</th>
+            <th>52-Wk Low</th>
+            <th>Market Cap</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>@item.Company.SymbolName</td>
-            <td> 
-                @item.Company.CompanyName
-            </td>
-            <td>@item.StockData.LastPrice</td>
-            <td>@item.StockData.Change</td>
 
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Company.SymbolName</td>
+                <td>@item.Company.CompanyName</td>
+                <td>@item.StockData.LastPrice?.ToString("0.00")</td>
+                <td>@item.StockData.Change?.ToString("0.00")</td>
+                <td>@item.StockData.PercentChange?.ToString("0.00")</td>
+                <td>@item.StockData.PrevClose?.ToString("0.00")</td>
+                <td>@item.StockData.FiftyTwoWeekHigh?.ToString("0.00")</td>
+                <td>@item.StockData.FiftyTwoWeekLow?.ToString("0.00")</td>
+                <td>@item.StockData.MarketCap?.ToString("0.00") M</td>
+            </tr>
+        }
     </tbody>
 </table>
+

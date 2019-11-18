@@ -8,14 +8,12 @@ begin
 	set nocount on;
 	SELECT 
 		SymbolName, CompanyName,
-		LastPrice, Change, PercentChange, Shares, TradeDate
+		LastPrice, Change, PercentChange, Shares, TradeDate, PrevClose, FiftyTwoWeekHigh, FiftyTwoWeekLow, MarketCap
 	FROM Companies, StocksData
 	WHERE Companies.Id = StocksData.SymbolId
 	AND StocksData.ScrapeId = (SELECT TOP 1 ScrapeId FROM dbo.ScrapesInfo 
 		where UserId = @UserId ORDER BY ScrapeId DESC);
 	
 end
-
-
 GO
 
