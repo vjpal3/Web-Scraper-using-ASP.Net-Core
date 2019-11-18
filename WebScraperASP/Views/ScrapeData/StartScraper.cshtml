@@ -1,10 +1,12 @@
 ﻿@model IEnumerable<WebScraperASP.ViewModels.CombinedStockDataVM>
+@using System.Globalization;
 
 @{
     ViewData["Title"] = "Scraped Data";
 }
 
-<p>Following data was scraped on 
+<p>
+    Following data was scraped on
 
     @{
         var e = Model.ElementAt(0);
@@ -40,7 +42,33 @@
                 <td>@item.StockData.PrevClose?.ToString("0.00")</td>
                 <td>@item.StockData.FiftyTwoWeekHigh?.ToString("0.00")</td>
                 <td>@item.StockData.FiftyTwoWeekLow?.ToString("0.00")</td>
-                <td>@item.StockData.MarketCap?.ToString("0.00") M</td>
+                
+                @{
+                    var cap = item.StockData.MarketCap;
+                    var capString = "";
+                    if (cap > 999999999999)
+                    {
+                        capString = cap?.ToString("0,,,,.###T", CultureInfo.InvariantCulture);
+                    }
+                    else if (cap > 999999999)
+                    {
+                        capString = cap?.ToString("0,,,.###B", CultureInfo.InvariantCulture);
+                    }
+                    else if (cap > 999999)
+                    {
+                        capString = cap?.ToString("0,,.###M", CultureInfo.InvariantCulture);
+                    }
+                    else if (cap > 999)
+                    {
+                        capString = cap?.ToString("0,.#K", CultureInfo.InvariantCulture);
+                    }
+                    else
+                    {
+                        capString = cap?.ToString(CultureInfo.InvariantCulture);
+                    }
+                }
+
+                <td>@capString</td>
             </tr>
         }
     </tbody>

@@ -93,16 +93,16 @@ namespace WebScraperASP.Models
             decimal? marketCapValue = 0;
             switch (capUnit)
             {
+                case 'M':
+                    marketCapValue = ParseDecimalString(marketCap.TrimEnd('M')) * (decimal?)Math.Pow(10.00, 6.00);
+                    break;
+
                 case 'B':
-                    marketCapValue = ParseDecimalString(marketCap.TrimEnd('B')) * (decimal?)Math.Pow(10.00, 3.00);
+                    marketCapValue = ParseDecimalString(marketCap.TrimEnd('B')) * (decimal?)Math.Pow(10.00, 9.00);
                     break;
 
                 case 'T':
-                    marketCapValue = ParseDecimalString(marketCap.TrimEnd('T')) * (decimal?)Math.Pow(10.00, 6.00);
-                    break;
-
-                case 'M':
-                    marketCapValue = ParseDecimalString(marketCap.TrimEnd('M'));
+                    marketCapValue = ParseDecimalString(marketCap.TrimEnd('T')) * (decimal?)Math.Pow(10.00, 12.00);
                     break;
 
                 default:
