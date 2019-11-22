@@ -27,6 +27,11 @@ namespace WebScraperASP.Controllers
             return View(model);
         }
 
+        public IActionResult Details(int id)
+        {
+            throw new NotImplementedException();
+        }
+
 
     }
 }
