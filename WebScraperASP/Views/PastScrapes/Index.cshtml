@@ -1,0 +1,22 @@
+﻿@model IEnumerable<WebScraperASP.Models.ScrapeInfo>
+
+@{
+    ViewData["Title"] = "List of Past Scrapes";
+}
+
+    <h4>Following Past Scrapes are available to view:</h4>
+
+<table class="table">
+    
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-controller="PastScrapes" asp-action="Details">
+                    @item.ScrapeDate &nbsp; @item.TimeZone
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -54,5 +54,14 @@ namespace WebScraperASP.Models
             return scrapes[0];
         }
 
+        public IEnumerable<ScrapeInfo> GetAllScrapesInfo(string userId)
+        {
+            using (IDbConnection connection = new SqlConnection(config.GetConnectionString("ScraperData")))
+            {
+                List<ScrapeInfo> scrapes = connection.Query<ScrapeInfo>("dbo.uspScrapesInfo_GetAllByUserId @UserId", new { UserId = userId }).ToList();
+                return scrapes;
+            }
+        }
+
     }
 }

@@ -10,5 +10,6 @@ namespace WebScraperASP.Models
     {
         void AddScrapeInfo(List<string> scrapedData, string userId);
         ScrapeInfo GetScrapeInfo(IDbConnection connection, string userId);
+        IEnumerable<ScrapeInfo> GetAllScrapesInfo(string userId);
     }
 }
