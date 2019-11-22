@@ -4,19 +4,21 @@
     ViewData["Title"] = "List of Past Scrapes";
 }
 
-    <h4>Following Past Scrapes are available to view:</h4>
+<p>
+    Data scraped on following dates is available to view. 
+    <br />
+    Please click on the date to view details.
+</p>
 
-<table class="table">
-    
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-controller="PastScrapes" asp-action="Details">
-                    @item.ScrapeDate &nbsp; @item.TimeZone
-                </a>
-            </td>
-        </tr>
+<ul>
+@foreach (var item in Model)
+{
+    <li>
+        <a asp-controller="PastScrapes" asp-action="Details">
+            @item.ScrapeDate.ToString("MMM dd, yyyy hh:mm tt") @item.TimeZone
+        </a>
+    </li>
 }
-    </tbody>
-</table>
+</ul>
+
+    

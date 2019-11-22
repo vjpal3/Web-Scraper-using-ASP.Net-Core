@@ -61,3 +61,11 @@ h2 {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.table {
+    width: auto;
+}
+
+li {
+    margin-bottom: 5px;
+}
