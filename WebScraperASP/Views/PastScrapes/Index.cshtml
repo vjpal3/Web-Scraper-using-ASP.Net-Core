@@ -4,21 +4,35 @@
     ViewData["Title"] = "List of Past Scrapes";
 }
 
-<p>
-    Data scraped on following dates is available to view. 
-    <br />
-    Please click on the date to view details.
-</p>
-
-<ul>
-@foreach (var item in Model)
+@if (Model.Any())
 {
-    <li>
-        <a asp-controller="PastScrapes" asp-action="Details">
-            @item.ScrapeDate.ToString("MMM dd, yyyy hh:mm tt") @item.TimeZone
-        </a>
-    </li>
-}
-</ul>
+    <p style="text-align: center";>
+        <a asp-controller="ScrapeData" asp-action="StartScraper" class="btn btn-primary">Request a New Scrape</a>
+    </p>
+        
+    <p>
+        Data scraped on following dates is available to view.
+        <br />
+        Please click on the date to view details.
+    </p>
 
-    
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <a asp-controller="PastScrapes" asp-action="Details">
+                    @item.ScrapeDate.ToString("MMM dd, yyyy hh:mm tt") @item.TimeZone
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Sorry! No past scrapes available for your account! </p>
+    <a asp-controller="ScrapeData" asp-action="StartScraper" class="btn btn-primary">Request a New Scrape</a>
+}
+
+
+
+
