@@ -32,7 +32,7 @@ namespace WebScraperASP.Controllers
 
         public ViewResult Details(int id)
         {
-            var model = combinedStockDataVMRepo.GetStocksDataByScrapeId(id);
+            var model = combinedStockDataVMRepo.GetStocksDataByScrapeId(scrapeInfoRepository, id);
             return View(model);
         }
     }

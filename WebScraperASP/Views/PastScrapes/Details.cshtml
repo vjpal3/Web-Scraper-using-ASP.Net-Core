@@ -6,12 +6,15 @@
     ViewData["Title"] = "Past Scrape";
 }
 
-<p>
-    Following data was scraped on
+    <p>
+        Following data was scraped on
+        @{
+            var e = Model.ElementAt(0);
+        }
 
-    
+        @e.ScrapeInfo.ScrapeDate.ToString("MMM dd yyyy hh:mm tt") &nbsp; @e.ScrapeInfo.TimeZone
 
-</p>
+    </p>
 <table class="table">
     <thead>
         <tr>

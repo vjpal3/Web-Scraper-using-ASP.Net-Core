@@ -11,6 +11,6 @@ namespace WebScraperASP.ViewModels
     {
         List<CombinedStockDataVM> GetRecentStocksData(IScrapeInfoRepository scrapeInfoRepo, string userId);
 
-        List<CombinedStockDataVM> GetStocksDataByScrapeId(int scrapeId);
+        List<CombinedStockDataVM> GetStocksDataByScrapeId(IScrapeInfoRepository scrapeInfoRep, int scrapeId);
     }
 }
