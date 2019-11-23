@@ -62,7 +62,7 @@ namespace WebScraperASP.Controllers
 
             CombinedStocksData = GetRecentData();
 
-            return View(CombinedStocksData);
+            return View("~/Views/PastScrapes/Details.cshtml", CombinedStocksData);
         }
 
         private List<CombinedStockDataVM> GetRecentData()
