@@ -80,10 +80,7 @@ namespace WebScraperASP
             {
                 routes.MapRoute(
                         name: "default",
-                        template: "{controller=Home}/{action=Index}/{id?}")
-                    .MapRoute(
-                        name: "Scraper",
-                        template: "ScrapeData/StartScraper");
+                        template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -33,6 +33,23 @@ namespace WebScraperASP.ViewModels
                 return stocksData;
             }
         }
+
+        public List<CombinedStockDataVM> GetStocksDataByScrapeId(int scrapeId)
+        {
+            using (IDbConnection connection = new SqlConnection(config.GetConnectionString("ScraperData")))
+            {
+                //ScrapeInfo scrapeInfo = scrapeInfoRepo.GetScrapeInfo(connection, userId);
+
+                List<CombinedStockDataVM> stocksData = connection.Query<Company, StockData, CombinedStockDataVM>
+                    ("dbo.uspStocksData_Companies_GetByScrapeId @ScrapeId",
+                    MapResults,
+                    new { ScrapeId = scrapeId }, splitOn: "LastPrice").ToList();
+
+                //stocksData[0].ScrapeInfo = scrapeInfo;
+                return stocksData;
+            }
+        }
+
         private CombinedStockDataVM MapResults(Company company, StockData stockData)
         {
             var stocksData = new CombinedStockDataVM

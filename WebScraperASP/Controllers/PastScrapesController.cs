@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebScraperASP.Models;
+using WebScraperASP.ViewModels;
 
 namespace WebScraperASP.Controllers
 {
@@ -14,10 +15,12 @@ namespace WebScraperASP.Controllers
     {
 
         private readonly IScrapeInfoRepository scrapeInfoRepository;
+        private readonly ICombinedStockDataVMRepo combinedStockDataVMRepo;
 
-        public PastScrapesController(IScrapeInfoRepository scrapeInfoRepository)
+        public PastScrapesController(IScrapeInfoRepository scrapeInfoRepository, ICombinedStockDataVMRepo combinedStockDataVMRepo)
         {
             this.scrapeInfoRepository = scrapeInfoRepository;
+            this.combinedStockDataVMRepo = combinedStockDataVMRepo;
         }
 
         public IActionResult Index()
@@ -27,11 +30,10 @@ namespace WebScraperASP.Controllers
             return View(model);
         }
 
-        public IActionResult Details(int id)
+        public ViewResult Details(int id)
         {
-            throw new NotImplementedException();
+            var model = combinedStockDataVMRepo.GetStocksDataByScrapeId(id);
+            return View(model);
         }
-
-
     }
 }

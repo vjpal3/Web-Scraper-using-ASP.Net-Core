@@ -9,6 +9,8 @@ namespace WebScraperASP.ViewModels
 {
     public interface ICombinedStockDataVMRepo
     {
-        List<CombinedStockDataVM> GetRecentStocksData(IScrapeInfoRepository scrapeInfoRepo, string userId); 
+        List<CombinedStockDataVM> GetRecentStocksData(IScrapeInfoRepository scrapeInfoRepo, string userId);
+
+        List<CombinedStockDataVM> GetStocksDataByScrapeId(int scrapeId);
     }
 }
